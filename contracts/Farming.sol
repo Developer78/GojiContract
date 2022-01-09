@@ -102,6 +102,12 @@ contract Farming is Ownable {
         rewardAddrMap[_tokenAddr]._rewardTokenAddress = _rewardAddress;
     }
 
+    /// @notice Admin method to withdraw the escrowed amount from the contract
+    /// @param _token Address of token to be enabled
+    function emergencyWithdraw (address _tokenAddr, uint256 _amount) public onlyOwner {
+       ERC20(_tokenAddr).transfer(msg.sender,_amount)
+    }
+
     /// @notice Admin method to set pay out dividends to farmers, update how much per token each farmer can claim
     /// @param _reward the aggregate amount to be send to all farmers
     /// @param _tokenAddr the token that this dividend gets paied out in

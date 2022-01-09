@@ -135,6 +135,13 @@ contract ERC20Locker is Ownable, ReentrancyGuard {
         supportedTokens[_token].updatedAt = block.timestamp;
     }
 
+    /// @notice Admin method to withdraw the escrowed amount from the contract
+    /// @param _token Address of token to be enabled
+    function emergencyWithdraw (address _token, uint256 _amount) public onlyOwner {
+        IERC20 token = IERC20(_token);
+        token.transfer(msg.sender, _amount);
+    }
+
     /******************* Private Methods **********************/
     /// @notice This private method transfers `_amount` from user's account to this contract for locking purpose
     /// @param _token Addess of user's ERC20 based token smart contract
